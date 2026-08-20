@@ -11,10 +11,14 @@
             "id": "da45c176ab8fa87e",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "notes/module 2(data analysis with python).md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "module 2(data analysis with python)"
             }
           }
         ]
@@ -79,7 +83,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "8f80a5e89400b67f",
@@ -184,7 +189,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "a9dad5bafd2d7858",
+  "active": "da45c176ab8fa87e",
   "lastOpenFiles": [
     "notes/module 2(data analysis with python).md",
     "notes/module 1(getting started).md",

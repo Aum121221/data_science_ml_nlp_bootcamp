@@ -320,13 +320,13 @@ arr = np.array([
 ])
 ```
 
-|Attribute|Purpose|Example|
-|---|---|---|
-|`.shape`|Dimensions|`arr.shape`|
-|`.ndim`|Number of dimensions|`arr.ndim`|
-|`.size`|Total number of elements|`arr.size`|
-|`.dtype`|Data type|`arr.dtype`|
-|`.itemsize`|Bytes used by each element|`arr.itemsize`|
+| Attribute   | Purpose                    | Example        |
+| ----------- | -------------------------- | -------------- |
+| `.shape`    | Dimensions                 | `arr.shape`    |
+| `.ndim`     | Number of dimensions       | `arr.ndim`     |
+| `.size`     | Total number of elements   | `arr.size`     |
+| `.dtype`    | Data type                  | `arr.dtype`    |
+| `.itemsize` | Bytes used by each element | `arr.itemsize` |
 
 Example:
 
@@ -607,13 +607,13 @@ Result:
 
 # 14. Slicing Patterns to Remember
 
-|Syntax|Meaning|
-|---|---|
-|`arr[1:]`|From index 1 to end|
-|`arr[:2]`|From beginning up to index 2|
-|`arr[:, 2:]`|All rows, columns from 2 onward|
-|`arr[:, :2]`|All rows, first 2 columns|
-|`arr[1:, 1:3]`|Rows from 1, columns 1–2|
+| Syntax         | Meaning                         |
+| -------------- | ------------------------------- |
+| `arr[1:]`      | From index 1 to end             |
+| `arr[:2]`      | From beginning up to index 2    |
+| `arr[:, 2:]`   | All rows, columns from 2 onward |
+| `arr[:, :2]`   | All rows, first 2 columns       |
+| `arr[1:, 1:3]` | Rows from 1, columns 1–2        |
 
 > 🧠 **Slice = `start : stop` → stop is excluded.**
 
@@ -832,13 +832,13 @@ for OR.
 
 # 20. NumPy vs Python Lists
 
-|Python List|NumPy Array|
-|---|---|
-|General-purpose collection|Numerical computing structure|
-|Slower for large numerical operations|Highly optimized for numerical operations|
-|Manual loops often needed|Vectorized operations|
-|Less suitable for matrix operations|Excellent for arrays/matrices|
-|Rich numerical functionality not built in|Extensive mathematical/statistical functions|
+| Python List                               | NumPy Array                                  |
+| ----------------------------------------- | -------------------------------------------- |
+| General-purpose collection                | Numerical computing structure                |
+| Slower for large numerical operations     | Highly optimized for numerical operations    |
+| Manual loops often needed                 | Vectorized operations                        |
+| Less suitable for matrix operations       | Excellent for arrays/matrices                |
+| Rich numerical functionality not built in | Extensive mathematical/statistical functions |
 
 > 🧠 **Data Science mental model:**  
 > **Python List → general data collection**  
@@ -1032,3 +1032,667 @@ Mean / Median / Std / Variance / Normalization
 ```
 
 **High-priority for exams/interviews:** `array()`, `shape`, `reshape()`, `arange()`, `ones()`, `zeros()`, `eye()`, array attributes, vectorization, ufuncs, indexing/slicing, Boolean indexing, statistical functions, and normalization.
+
+
+# Pandas — Master Revision Notes
+
+## 1. What is Pandas?
+
+**Pandas** is a powerful Python library used for:
+
+- Data manipulation
+    
+- Data analysis
+    
+- Data cleaning
+    
+
+It provides two primary data structures:
+
+|Structure|Dimension|Description|
+|---|--:|---|
+|**Series**|1D|Array-like object, similar to a single column|
+|**DataFrame**|2D|Tabular structure with rows and columns|
+
+A DataFrame is **mutable** and can be **heterogeneous**, meaning different columns can contain different types of data.
+
+---
+
+## 2. Installing Pandas
+
+Using `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
+Add:
+
+```text
+pandas
+```
+
+Or install directly:
+
+```bash
+pip install pandas
+```
+
+---
+
+## 3. Importing Pandas
+
+```python
+import pandas as pd
+```
+
+`pd` is the conventional alias for Pandas.
+
+---
+
+# Pandas Series
+
+## 4. What is a Series?
+
+A **Pandas Series** is a **one-dimensional array-like object** that can hold any data type.
+
+It can be thought of as a **single column in a table**.
+
+```text
+Series
+   ↓
+1-dimensional
+   ↓
+Single column
+```
+
+---
+
+## 5. Creating a Series from a List
+
+```python
+import pandas as pd
+
+data = [1, 2, 3, 4, 5]
+
+series = pd.Series(data)
+
+print(series)
+```
+
+Output:
+
+```text
+0    1
+1    2
+2    3
+3    4
+4    5
+dtype: int64
+```
+
+The numbers on the left are the **default indexes**.
+
+```python
+type(series)
+```
+
+Output:
+
+```text
+pandas.core.series.Series
+```
+
+---
+
+## 6. Creating a Series from a Dictionary
+
+A Series can also be created from a dictionary:
+
+```python
+data = {
+    "a": 1,
+    "b": 2,
+    "c": 3
+}
+
+series_dict = pd.Series(data)
+
+print(series_dict)
+```
+
+Output:
+
+```text
+a    1
+b    2
+c    3
+```
+
+When a dictionary is converted to a Series:
+
+- **Keys → indexes**
+    
+- **Values → Series values**
+    
+
+---
+
+## 7. Creating a Series with Custom Indexes
+
+You can provide your own indexes:
+
+```python
+data = [10, 20, 30]
+
+indexes = ["a", "b", "c"]
+
+series = pd.Series(
+    data,
+    index=indexes
+)
+
+print(series)
+```
+
+Output:
+
+```text
+a    10
+b    20
+c    30
+```
+
+Syntax:
+
+```python
+pd.Series(data, index=indexes)
+```
+
+The number of indexes should correspond to the number of data elements.
+
+---
+
+# Pandas DataFrame
+
+## 8. What is a DataFrame?
+
+A **DataFrame** is a:
+
+- Two-dimensional
+    
+- Mutable
+    
+- Potentially heterogeneous
+    
+- Tabular data structure
+    
+- With labeled rows and columns
+    
+
+It is similar to a **table in a database or an Excel sheet**.
+
+```text
+DataFrame
+    ↓
+Rows + Columns
+    ↓
+Complete table
+```
+
+---
+
+## 9. Creating a DataFrame from a Dictionary of Lists
+
+Example:
+
+```python
+data = {
+    "name": ["Krish", "John", "Jack"],
+    "age": [25, 30, 45],
+    "city": ["Bangalore", "New York", "Florida"]
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+```
+
+Output:
+
+```text
+    name  age       city
+0  Krish   25  Bangalore
+1   John   30   New York
+2   Jack   45    Florida
+```
+
+Here:
+
+- Dictionary keys → **column names**
+    
+- Lists → **column values**
+    
+- Pandas automatically creates row indexes
+    
+
+All columns should contain the appropriate number of values for the records being created.
+
+---
+
+## 10. Creating a DataFrame from a List of Dictionaries
+
+Each dictionary can represent one row:
+
+```python
+data = [
+    {
+        "name": "Krish",
+        "age": 32,
+        "city": "Bangalore"
+    },
+    {
+        "name": "John",
+        "age": 34,
+        "city": "Bangalore"
+    },
+    {
+        "name": "Jack",
+        "age": 32,
+        "city": "Bangalore"
+    }
+]
+
+df = pd.DataFrame(data)
+
+print(df)
+```
+
+Here:
+
+**Each dictionary → one row**
+
+This differs from a **dictionary of lists**, where each key represents a column.
+
+---
+
+## 11. Converting a DataFrame to NumPy
+
+A DataFrame can be converted to a NumPy array:
+
+```python
+np.array(df)
+```
+
+The resulting NumPy array contains the underlying data, without the DataFrame's row indexes and column names.
+
+---
+
+# Reading Data
+
+## 12. Reading a CSV File
+
+In real-world data analysis, DataFrames are often created from datasets such as CSV files.
+
+```python
+df = pd.read_csv("sales_data.csv")
+```
+
+Important function:
+
+```python
+pd.read_csv()
+```
+
+This reads the CSV file and creates a DataFrame.
+
+The transcript also mentions functions for other formats, such as:
+
+```python
+pd.read_excel()
+```
+
+for Excel files.
+
+---
+
+## 13. `df.head()`
+
+To view the first few rows:
+
+```python
+df.head()
+```
+
+By default, it displays the first **5 rows**.
+
+You can specify the number:
+
+```python
+df.head(5)
+```
+
+---
+
+## 14. `df.tail()`
+
+To view the last few rows:
+
+```python
+df.tail()
+```
+
+By default, it displays the last **5 rows**.
+
+You can specify the number:
+
+```python
+df.tail(5)
+```
+
+---
+
+# Accessing Data
+
+## 15. Selecting a Column
+
+Suppose:
+
+```python
+df = pd.DataFrame({
+    "name": ["Krish", "John", "Jack"],
+    "age": [25, 30, 45],
+    "city": ["Bangalore", "New York", "Florida"]
+})
+```
+
+To select the `name` column:
+
+```python
+df["name"]
+```
+
+Selecting a single column returns a **Series**.
+
+```python
+type(df["name"])
+```
+
+→ `pandas.core.series.Series`
+
+---
+
+## 16. `.loc[]` — Label-Based Access
+
+`loc` is used to access data using **labels**.
+
+### Select a row
+
+```python
+df.loc[0]
+```
+
+This selects the row with label `0`.
+
+### Select a specific value
+
+```python
+df.loc[0, "name"]
+```
+
+This selects the `name` value from row `0`.
+
+General form:
+
+```python
+df.loc[row_label, column_label]
+```
+
+---
+
+## 17. `.iloc[]` — Integer Position-Based Access
+
+`iloc` accesses data using **integer positions**.
+
+### Select a row
+
+```python
+df.iloc[0]
+```
+
+→ first row.
+
+### Select a specific element
+
+```python
+df.iloc[0, 0]
+```
+
+This means:
+
+- Row position = `0`
+    
+- Column position = `0`
+    
+
+Another example:
+
+```python
+df.iloc[0, 1]
+```
+
+→ first row, second column.
+
+General form:
+
+```python
+df.iloc[row_position, column_position]
+```
+
+---
+
+## 18. `.at[]` — Specific Element Using Labels
+
+`at` is used to access a **specific cell using row and column labels**.
+
+Syntax:
+
+```python
+df.at[row_label, column_label]
+```
+
+Example:
+
+```python
+df.at[1, "age"]
+```
+
+If row `1` has age `30`, the result is:
+
+```text
+30
+```
+
+Another example:
+
+```python
+df.at[2, "name"]
+```
+
+→ `Jack`
+
+---
+
+## 19. `.iat[]` — Specific Element Using Positions
+
+`iat` accesses a specific cell using **integer positions**.
+
+Syntax:
+
+```python
+df.iat[row_position, column_position]
+```
+
+Example:
+
+```python
+df.iat[2, 2]
+```
+
+This accesses the third row and third column.
+
+---
+
+# Data Manipulation
+
+## 20. Adding a New Column
+
+A new column can be added directly:
+
+```python
+df["salary"] = [50000, 60000, 70000]
+```
+
+General syntax:
+
+```python
+df["new_column"] = values
+```
+
+The new column is added to the DataFrame.
+
+---
+
+## 21. Removing a Column
+
+Use the `drop()` method:
+
+```python
+df.drop("salary", axis=1)
+```
+
+Here:
+
+```text
+salary → column to remove
+axis=1 → operate on columns
+```
+
+Pandas uses:
+
+```text
+axis=0 → rows
+axis=1 → columns
+```
+
+If `axis=1` is omitted, `drop()` operates on the row index by default. Therefore, trying to drop a column name without specifying the column axis can result in an error.
+
+---
+
+## 22. `inplace=True`
+
+By default:
+
+```python
+df.drop("salary", axis=1)
+```
+
+does not permanently modify the original DataFrame.
+
+To apply the change directly:
+
+```python
+df.drop(
+    "salary",
+    axis=1,
+    inplace=True
+)
+```
+
+With `inplace=True`, the existing DataFrame is modified.
+
+---
+
+## 23. Modifying an Existing Column
+
+Pandas allows operations to be applied directly to an entire column.
+
+Example:
+
+```python
+df["age"] = df["age"] + 1
+```
+
+If the original values are:
+
+```text
+25
+30
+45
+```
+
+they become:
+
+```text
+26
+31
+46
+```
+
+The operation is applied to all values in the column.
+
+---
+
+## 24. Dropping a Row
+
+Rows can also be removed with `drop()`.
+
+```python
+df.drop(0)
+```
+
+This removes the row with index `0` from the returned result.
+
+To permanently remove it:
+
+```python
+df.drop(0, inplace=True)
+```
+
+Since the default axis is `0`, this operates on rows.
+
+---
+
+# Statistical Analysis
+
+## 25. `df.describe()`
+
+`describe()` provides a **statistical summary of numerical columns**.
+
+```python
+df.describe()
+```
+
+Typical output contains:
+
+|Statistic|Meaning|
+|---|---|
+|`count`|Number of records|
+|`mean`|Average|
+|`std`|Standard deviation|
+|`min`|Minimum|
+|`25%`|25th percentile|
+|`50%`|50th percentile / median|
+|`75%`|75th percentile|
+|`max`|Maximum|
+
+For a sales dataset, this can provide statistics for numerical fields such as:
+
+- Unit sold
+    
+- Unit price
+    
+- Total revenue
+    
+
+The transcript ends this lesson by using `describe()` as the starting point for further data manipulation, which is covered in the following lesson.
